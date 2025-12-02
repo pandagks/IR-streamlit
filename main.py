@@ -6,7 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
 
-url = "https://drive.google.com/file/d/1WyOr53Lf52zVG79obWfHsPzterKHIJcl/view?usp=drive_link"
+url = "https://drive.google.com/uc?export=download&id=1WyOr53Lf52zVG79obWfHsPzterKHIJcl"
 
 df = pd.read_csv(url)
 df = df.dropna(subset=["직무", "기업구분", "평점"])
@@ -190,8 +190,7 @@ st.markdown("---")  # 구분선
 
 st.markdown("## 학점별 취업 분석")
 
-url2 = "https://drive.google.com/file/d/1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2/view?usp=drive_link"
-
+url2 = "https://drive.google.com/uc?export=download&id=d/1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2"
 df = pd.read_csv(url2)
 
 replace_map = {
@@ -290,4 +289,5 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
 
