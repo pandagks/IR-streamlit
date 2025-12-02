@@ -6,7 +6,8 @@ import plotly.graph_objects as go
 # ======================================================
 # 데이터 로딩
 # ======================================================
-url = "https://drive.google.com/file/d/1WyOr53Lf52zVG79obWfHsPzterKHIJcl/view?usp=drive_link"
+url = "https://drive.google.com/uc?export=download&id=1WyOr53Lf52zVG79obWfHsPzterKHIJcl"
+
 df = pd.read_csv(url)
 df = df.dropna(subset=["직무", "기업구분", "평점"])
 df1 = pd.read_csv(url)  
@@ -230,5 +231,6 @@ if st.button("리포트 생성"):
             "희망기업 평균": comp_scaled,
             "차이": comp_scaled - user_scaled
         }))
+
 
 
