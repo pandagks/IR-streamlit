@@ -190,7 +190,7 @@ st.markdown("---")  # 구분선
 
 st.markdown("## 학점별 취업 분석")
 
-url2 = "https://drive.google.com/uc?export=download&id=d/1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2"
+url2 = "https://drive.google.com/uc?export=download&id=1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2"
 df = pd.read_csv(url2)
 
 replace_map = {
@@ -289,5 +289,6 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
 
 
