@@ -6,3 +6,4 @@ mlxtend
 tqdm
 scikit-learn
 openpyxl
+seaborn
