@@ -7,7 +7,9 @@ import plotly.graph_objects as go
 import seaborn as sns
 import koreanize_matplotlib
 
-df = pd.read_csv('./data/영어,비교과_종합성적.csv')
+url = "https://drive.google.com/file/d/1WyOr53Lf52zVG79obWfHsPzterKHIJcl/view?usp=drive_link"
+
+df = pd.read_csv(url)
 df = df.dropna(subset=["직무", "기업구분", "평점"])
 
 st.set_page_config(
@@ -189,9 +191,9 @@ st.markdown("---")  # 구분선
 
 st.markdown("## 학점별 취업 분석")
 
+url2 = "https://drive.google.com/file/d/1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2/view?usp=drive_link"
 
-
-df = pd.read_csv('./data/취업분석데이터_전처리완료.csv')
+df = pd.read_csv(url2)
 
 replace_map = {
     '보호대상중견기업': '중견기업',
@@ -283,6 +285,7 @@ with col2:
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
