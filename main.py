@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
-import koreanize_matplotlib
 
 url = "https://drive.google.com/file/d/1WyOr53Lf52zVG79obWfHsPzterKHIJcl/view?usp=drive_link"
 
@@ -291,3 +290,4 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
