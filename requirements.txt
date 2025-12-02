@@ -7,4 +7,5 @@ tqdm
 scikit-learn
 openpyxl
 seaborn
-koreanize_matplotlib
+
+
