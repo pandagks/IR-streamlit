@@ -117,7 +117,7 @@ with tab0:
 with tab1:
     st.title('교과 기반 연관 패턴 분석')
     url_교과 = "https://drive.google.com/uc?export=download&id=12-Wkn7_fVi0vKOUFONwFJUF9YG7kwlDj"
-
+    #'./data/연관성분석_데이터셋(교과만).csv'
     df = pd.read_csv(url_교과)
     st.success("데이터 로딩 완료")
 
@@ -278,6 +278,7 @@ with tab1:
 with tab2:
     st.title("📘 비교과 기반 연관 패턴 분석")
     url_비교과 = "https://drive.google.com/uc?export=download&id=1yNBF4-q8ak3VfxRbg8S7LJxd-Wgirujv"
+    #'./data/연관성분석_데이터셋(비교과만).csv'
     df = pd.read_csv(url_비교과)
     st.success("데이터 로딩 완료")
 
@@ -425,6 +426,7 @@ with tab3:
     st.title("📘 교과 + 비교과 기반 연관 패턴 분석")
     url_교비 = "https://drive.google.com/uc?export=download&id=182vW6uKxr3Jbd0FGwy697ew-hHmai3Hc"
     df = pd.read_csv(url_교비)
+    #'./data/연관성분석_데이터셋.csv'
     st.success("데이터 로딩 완료")
 
     filter_cols = ["학부(대학)", "직무", "기업구분"]
@@ -561,5 +563,6 @@ with tab3:
             st.dataframe(post_df)
 
         st.markdown("---")
+
 
 
