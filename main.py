@@ -6,11 +6,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
 
-url = "https://drive.google.com/uc?export=download&id=1WyOr53Lf52zVG79obWfHsPzterKHIJcl"
 
-#./data/영어,비교과_종합성적.csv'
-
-df = pd.read_csv(url)
+df = pd.read_csv(./data/영어,비교과_종합성적.csv.gz')
 df = df.dropna(subset=["직무", "기업구분", "평점"])
 
 st.set_page_config(
@@ -192,24 +189,32 @@ st.markdown("---")  # 구분선
 
 st.markdown("## 학점별 취업 분석")
 
-url2 = "https://drive.google.com/uc?export=download&id=1KPrtxnvYca9_DMB3kUiCI-nbxapop_r2"
-df = pd.read_csv(url2)
 
-replace_map = {
-    '보호대상중견기업': '중견기업',
-    '한시성중소기업': '중소기업',
-    '공공/공직(공무원,공공기관,공기업)': '공공기관',
-    '소기업': '중소기업',
-    '중기업': '중소기업',
-    '기타(비영리단체)': '비영리단체',
-}
-df['기업구분'] = df['기업구분'].replace(replace_map)
+@st.cache_data
+def load_and_preprocess():
+    df = pd.read_csv("./data/취업분석데이터_전처리완료.csv.gz")
 
-def add_gpa_bin(df):
+    replace_map = {
+        '보호대상중견기업': '중견기업',
+        '한시성중소기업': '중소기업',
+        '공공/공직(공무원,공공기관,공기업)': '공공기관',
+        '소기업': '중소기업',
+        '중기업': '중소기업',
+        '기타(비영리단체)': '비영리단체',
+    }
+    df['기업구분'] = df['기업구분'].replace(replace_map)
+
     bins = [0, 2.5, 3.0, 3.5, 4.0, 4.5]
     labels = ['≤2.5','2.5~3.0','3.0~3.5','3.5~4.0','4.0~4.5']
-    df['학점구간'] = pd.cut(df['평점'], bins=bins, labels=labels, include_lowest=True)
+    df['학점구간'] = pd.cut(
+        df['평점'],
+        bins=bins,
+        labels=labels,
+        include_lowest=True
+    )
+
     return df
+
 
 df = add_gpa_bin(df)
 
@@ -291,6 +296,7 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
 
 
 
