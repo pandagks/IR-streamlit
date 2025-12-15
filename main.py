@@ -216,7 +216,9 @@ def load_and_preprocess():
     return df
 
 
-df = add_gpa_bin(df)
+# ✅ 여기서 df 생성 (중요)
+df = load_and_preprocess()
+
 
 st.title("학점구간별 기업구분 Heatmap")
 
@@ -224,25 +226,29 @@ st.title("학점구간별 기업구분 Heatmap")
 
 df_filtered = df[df['학부(대학)'] == 학부]
 
-# 모든 학점구간 × 기업구분 강제 생성
+
+# =========================
+# Crosstab 계산
+# =========================
 gpa_levels = ['≤2.5','2.5~3.0','3.0~3.5','3.5~4.0','4.0~4.5']
 ctab = pd.crosstab(df_filtered['학점구간'], df_filtered['기업구분'])
 
-# 기업구분 레벨을 crosstab의 실제 컬럼 순서로 가져오기 (이게 핵심!!)
 company_levels = ctab.columns.tolist()
 
 ctab = ctab.reindex(index=gpa_levels, columns=company_levels, fill_value=0)
 
-# percent 계산 (학점 기준 100%)
-percent_tab = ctab.div(ctab.sum(axis=1).replace(0,1), axis=0) * 100
+percent_tab = ctab.div(ctab.sum(axis=1).replace(0, 1), axis=0) * 100
 
-# text 구성
+
 custom_text = percent_tab.copy()
 for r in range(percent_tab.shape[0]):
     for c in range(percent_tab.shape[1]):
-        custom_text.iloc[r,c] = f"{percent_tab.iloc[r,c]:.1f}%\n({ctab.iloc[r,c]}명)"
+        custom_text.iloc[r, c] = f"{percent_tab.iloc[r, c]:.1f}%\n({ctab.iloc[r, c]}명)"
 
 
+# =========================
+# Layout
+# =========================
 col1, col2 = st.columns([1, 3])
 
 
@@ -256,8 +262,6 @@ with col1:
         values=total_company_count.values,
         hole=0.3,
         marker=dict(colors=px.colors.qualitative.Set3),
-
-        #  여기서 percent + 명수 둘 다 표시
         texttemplate="%{percent:.1%}\n(%{value}명)",
         textposition="inside",
     )])
@@ -267,15 +271,11 @@ with col1:
     st.plotly_chart(fig_pie, use_container_width=True)
 
 
-
-# 3) 오른쪽: 기존 Heatmap
-
 with col2:
     st.subheader("학점구간별 기업구분 비율")
 
-    # Heatmap 생성
     fig = go.Figure(data=go.Heatmap(
-        z=percent_tab.T.values,       # z transpose
+        z=percent_tab.T.values,
         x=gpa_levels,
         y=company_levels,
         text=custom_text.T.values,
@@ -292,15 +292,4 @@ with col2:
     st.plotly_chart(fig, use_container_width=True)
 
 
-
-
-
-st.markdown("---")  # 구분선
-
-
-
-
-
-
-
-
+st.markdown("---")
