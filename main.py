@@ -8,6 +8,8 @@ import seaborn as sns
 
 url = "https://drive.google.com/uc?export=download&id=1WyOr53Lf52zVG79obWfHsPzterKHIJcl"
 
+#./data/영어,비교과_종합성적.csv'
+
 df = pd.read_csv(url)
 df = df.dropna(subset=["직무", "기업구분", "평점"])
 
@@ -289,6 +291,7 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
 
 
 
