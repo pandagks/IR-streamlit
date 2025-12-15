@@ -8,7 +8,7 @@ import seaborn as sns
 
 url = "https://drive.google.com/uc?export=download&id=1WyOr53Lf52zVG79obWfHsPzterKHIJcl"
 
-df = pd.read_csv(url)
+df = pd.read_pickle(url)
 df = df.dropna(subset=["직무", "기업구분", "평점"])
 
 st.set_page_config(
@@ -289,6 +289,7 @@ with col2:
 
 
 st.markdown("---")  # 구분선
+
 
 
 
