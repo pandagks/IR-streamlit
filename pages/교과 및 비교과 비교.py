@@ -170,8 +170,8 @@ with tab1:
         key="t1_target_value"
     )
 
-    df_filtered["target"] = (df_filtered[target_col] == target_value).astype(int)
-
+    df_filtered = df_filtered.copy()
+    df_filtered.loc[:, "target"] = (df_filtered[target_col] == target_value).astype(int)
     st.markdown("---")  # 구분선
 
     # Binary feature 탐색
@@ -331,7 +331,8 @@ with tab2:
         key="t2_target_value"
     )
 
-    df_filtered["target"] = (df_filtered[target_col] == target_value).astype(int)
+    df_filtered = df_filtered.copy()
+    df_filtered.loc[:, "target"] = (df_filtered[target_col] == target_value).astype(int)
 
     st.markdown("---")
 
@@ -480,7 +481,8 @@ with tab3:
         key="t3_target_value"
     )
 
-    df_filtered["target"] = (df_filtered[target_col] == target_value).astype(int)
+    df_filtered = df_filtered.copy()
+    df_filtered.loc[:, "target"] = (df_filtered[target_col] == target_value).astype(int)
 
     st.markdown("---")
 
