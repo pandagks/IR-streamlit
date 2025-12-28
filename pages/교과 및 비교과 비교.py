@@ -5,13 +5,15 @@ from module.pattern_mining import direct_pattern_mining
 def remove_target_patterns(results, target_name="target"):
     pattern_cols = [
         c for c in results.columns
-        if results[c].apply(lambda x: isinstance(x, (list, tuple, set))).any()
+        if results[c].apply(lambda x: isinstance(x, (list, tuple, set, frozenset))).any()
     ]
 
     for col in pattern_cols:
         results = results[
             ~results[col].apply(
-                lambda x: target_name in x if isinstance(x, (list, tuple, set)) else False
+                lambda x: target_name in x
+                if isinstance(x, (list, tuple, set, frozenset))
+                else False
             )
         ]
 
@@ -585,6 +587,7 @@ with tab3:
             st.dataframe(post_df)
 
         st.markdown("---")
+
 
 
 
