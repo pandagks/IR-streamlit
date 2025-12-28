@@ -2,6 +2,21 @@ import streamlit as st
 import pandas as pd
 from module.pattern_mining import direct_pattern_mining
 
+def remove_target_patterns(results, target_name="target"):
+    pattern_cols = [
+        c for c in results.columns
+        if results[c].apply(lambda x: isinstance(x, (list, tuple, set))).any()
+    ]
+
+    for col in pattern_cols:
+        results = results[
+            ~results[col].apply(
+                lambda x: target_name in x if isinstance(x, (list, tuple, set)) else False
+            )
+        ]
+
+    return results
+
 st.set_page_config(
     page_title="선배들이 들었던 교과, 비교과 확인",
     layout="wide",
@@ -204,12 +219,15 @@ with tab1:
 
             try:
                 results = direct_pattern_mining(
-                    data=df_input,
-                    target_col="target",
-                    min_confidence=min_conf,
-                    min_support=min_supp,
-                    max_items=max_items
-                )
+                data=df_input,
+                target_col="target",
+                min_confidence=min_conf,
+                min_support=min_supp,
+                max_items=max_items
+            )
+            
+                results = remove_target_patterns(results, target_name="target")
+
             except:
                 st.warning("⚠️ 패턴을 생성할 수 없습니다.")
                 st.stop()
@@ -349,12 +367,14 @@ with tab2:
 
             try:
                 results = direct_pattern_mining(
-                    data=df_input,
-                    target_col="target",
-                    min_confidence=min_conf,
-                    min_support=min_supp,
-                    max_items=max_items
-                )
+                data=df_input,
+                target_col="target",
+                min_confidence=min_conf,
+                min_support=min_supp,
+                max_items=max_items
+            )
+            
+                results = remove_target_patterns(results, target_name="target")
             except:
                 st.warning("⚠️ 패턴 생성 불가")
                 st.stop()
@@ -496,12 +516,14 @@ with tab3:
 
             try:
                 results = direct_pattern_mining(
-                    data=df_input,
-                    target_col="target",
-                    min_confidence=min_conf,
-                    min_support=min_supp,
-                    max_items=max_items
-                )
+                data=df_input,
+                target_col="target",
+                min_confidence=min_conf,
+                min_support=min_supp,
+                max_items=max_items
+            )
+            
+                results = remove_target_patterns(results, target_name="target")
             except:
                 st.warning("⚠️ 패턴 생성 불가")
                 st.stop()
@@ -561,6 +583,7 @@ with tab3:
             st.dataframe(post_df)
 
         st.markdown("---")
+
 
 
 
