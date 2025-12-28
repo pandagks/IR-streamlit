@@ -2,20 +2,17 @@ import streamlit as st
 import pandas as pd
 from module.pattern_mining import direct_pattern_mining
 
-def remove_target_patterns(results, target_name="target"):
-    pattern_cols = [
-        c for c in results.columns
-        if results[c].apply(lambda x: isinstance(x, (list, tuple, set, frozenset))).any()
-    ]
+def remove_target_patterns(results, target_col_name):
+    def contains_target(x):
+        if isinstance(x, (list, tuple, set, frozenset)):
+            return any(item.startswith(f"{target_col_name}_") for item in x)
+        if isinstance(x, str):
+            return f"{target_col_name}_" in x
+        return False
 
-    for col in pattern_cols:
-        results = results[
-            ~results[col].apply(
-                lambda x: target_name in x
-                if isinstance(x, (list, tuple, set, frozenset))
-                else False
-            )
-        ]
+    for col in results.columns:
+        if results[col].apply(contains_target).any():
+            results = results[~results[col].apply(contains_target)]
 
     return results
 
@@ -228,7 +225,7 @@ with tab1:
                 max_items=max_items
             )
             
-                results = remove_target_patterns(results, target_name="target")
+                results = remove_target_patterns(results, target_col_name=target_col)
 
             except:
                 st.warning("⚠️ 패턴을 생성할 수 없습니다.")
@@ -377,7 +374,7 @@ with tab2:
                 max_items=max_items
             )
             
-                results = remove_target_patterns(results, target_name="target")
+                results = remove_target_patterns(results, target_col_name=target_col)
             except:
                 st.warning("⚠️ 패턴 생성 불가")
                 st.stop()
@@ -527,7 +524,7 @@ with tab3:
                 max_items=max_items
             )
             
-                results = remove_target_patterns(results, target_name="target")
+                results = remove_target_patterns(results, target_col_name=target_col)
             except:
                 st.warning("⚠️ 패턴 생성 불가")
                 st.stop()
@@ -587,6 +584,7 @@ with tab3:
             st.dataframe(post_df)
 
         st.markdown("---")
+
 
 
 
